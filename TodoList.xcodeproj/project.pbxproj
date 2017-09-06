@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A3BF02D1F5FC06200C871E4 /* FinishedTodoList.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7A3BF02C1F5FC06200C871E4 /* FinishedTodoList.mm */; };
 		AB8EC9151937DDA23E6E054C /* Pods_TodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88316C8B7E228578C420E4D5 /* Pods_TodoList.framework */; };
 		C747136B1F5AFA6A000D60EE /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = C747136A1F5AFA6A000D60EE /* AppDelegate.mm */; };
 		C747136E1F5AFA6A000D60EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C747136D1F5AFA6A000D60EE /* main.m */; };
@@ -23,6 +24,9 @@
 
 /* Begin PBXFileReference section */
 		5589AB19FEF341A23C77791C /* Pods-TodoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodoList/Pods-TodoList.debug.xcconfig"; sourceTree = "<group>"; };
+		7A3BF02B1F5FC06200C871E4 /* FinishedTodoList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishedTodoList.h; sourceTree = "<group>"; };
+		7A3BF02C1F5FC06200C871E4 /* FinishedTodoList.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FinishedTodoList.mm; sourceTree = "<group>"; };
+		7A3BF02E1F5FC40A00C871E4 /* MainConstantDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainConstantDefine.h; sourceTree = "<group>"; };
 		88316C8B7E228578C420E4D5 /* Pods_TodoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74713661F5AFA6A000D60EE /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74713691F5AFA6A000D60EE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -118,10 +122,13 @@
 				C7B4A58A1F5BA9CC00867BC4 /* NSDate+Util.m */,
 				C7AF43AC1F5C23C400AD1CDF /* TodoDetailVC.h */,
 				C7AF43AD1F5C23C400AD1CDF /* TodoDetailVC.mm */,
+				7A3BF02E1F5FC40A00C871E4 /* MainConstantDefine.h */,
 				C74713721F5AFA6A000D60EE /* Assets.xcassets */,
 				C74713741F5AFA6A000D60EE /* Main.storyboard */,
 				C74713771F5AFA6A000D60EE /* Info.plist */,
 				C747136C1F5AFA6A000D60EE /* Supporting Files */,
+				7A3BF02B1F5FC06200C871E4 /* FinishedTodoList.h */,
+				7A3BF02C1F5FC06200C871E4 /* FinishedTodoList.mm */,
 			);
 			path = TodoList;
 			sourceTree = "<group>";
@@ -268,6 +275,7 @@
 				C7AF43AE1F5C23C400AD1CDF /* TodoDetailVC.mm in Sources */,
 				C74713711F5AFA6A000D60EE /* TodoListVC.mm in Sources */,
 				C747136E1F5AFA6A000D60EE /* main.m in Sources */,
+				7A3BF02D1F5FC06200C871E4 /* FinishedTodoList.mm in Sources */,
 				C747136B1F5AFA6A000D60EE /* AppDelegate.mm in Sources */,
 				C7B4A58B1F5BA9CC00867BC4 /* NSDate+Util.m in Sources */,
 			);

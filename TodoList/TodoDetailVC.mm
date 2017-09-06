@@ -13,6 +13,7 @@
 
 @property (unsafe_unretained) IBOutlet NSTextView *contentTextView;
 @property (weak) IBOutlet NSTextFieldCell *timestampTextField;
+@property (strong) IBOutlet NSButton *finishButton;
 
 @end
 
@@ -22,6 +23,9 @@
     [super viewDidLoad];
     self.contentTextView.string = self.todo.content;
     self.timestampTextField.stringValue = [NSDate yyyyMMddHHmmssWithDate:[NSDate dateWithTimeIntervalSince1970:self.todo.timestamp]];
+    if (self.type == TodoTypeFinished) {
+        self.finishButton.hidden = YES;
+    }
 }
 
 - (IBAction)deleteTodo:(id)sender {

@@ -65,6 +65,13 @@ static DataBaseManager *_dbManager;
     return todos;
 }
 
+- (NSArray<Todo *> *)queryFinishedTodos {
+    NSArray<Todo *> *todos = [self.database getObjectsOfClass:Todo.class
+                                                    fromTable:@"todo"
+                                                        where:Todo.isFinished==YES];
+    return todos;
+}
+
 - (BOOL)deleteTodo:(Todo *)todo {
     BOOL result = [self.database deleteObjectsFromTable:@"todo"
                                                   where:Todo.timestamp==todo.timestamp];

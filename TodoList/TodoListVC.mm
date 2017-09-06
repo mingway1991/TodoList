@@ -7,15 +7,18 @@
 //
 
 #import "TodoListVC.h"
-#import <WCDB/WCDB.h>
 #import "DataBaseManager.h"
 #import "NSDate+Util.h"
 #import "TodoDetailVC.h"
+#import "MainConstantDefine.h"
 
 @interface TodoListVC () <NSTableViewDataSource, NSTableViewDelegate>
 
+@property (strong) IBOutlet NSSegmentedControl *segmentedControl;
 @property (weak) IBOutlet NSTableView *todosTableView;
-@property (retain) NSArray<Todo *> *todos;
+@property (retain) NSArray<Todo *> *unfinishedTodos;
+@property (retain) NSArray<Todo *> *finishedTodos;
+@property (assign) TodoType type;
 
 @end
 
@@ -23,13 +26,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.type = TodoTypeUnfinished;
     [self.todosTableView setDoubleAction:@selector(tableViewDoubleClick:)];
     [self refreshTable];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTable) name:@"reloadTodoList" object:nil];
 }
 
 - (void)refreshTable {
-    self.todos = [[DataBaseManager shared] queryUnfinishedTodos];
+    self.unfinishedTodos = [[DataBaseManager shared] queryUnfinishedTodos];
+    self.finishedTodos = [[DataBaseManager shared] queryFinishedTodos];
+    [self.todosTableView reloadData];
+}
+
+#pragma mark -
+#pragma mark Action
+- (IBAction)switchSegmentControl:(id)sender {
+    if (self.segmentedControl.selectedSegment == 0) {
+        self.type = TodoTypeUnfinished;
+    } else if (self.segmentedControl.selectedSegment == 1) {
+        self.type = TodoTypeFinished;
+    }
     [self.todosTableView reloadData];
 }
 
@@ -38,21 +54,40 @@
 - (void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"detail"]) {
         NSInteger rowNumber = [self.todosTableView clickedRow];
-        Todo* todo = [self.todos objectAtIndex:rowNumber];
+        Todo* todo;
+        if (self.type == TodoTypeUnfinished) {
+            todo = [self.unfinishedTodos objectAtIndex:rowNumber];
+        } else if (self.type == TodoTypeFinished) {
+            todo = [self.finishedTodos objectAtIndex:rowNumber];
+        }
         TodoDetailVC *vc = segue.destinationController;
         vc.todo = todo;
+        vc.type = self.type;
     }
 }
 
 #pragma mark-
 #pragma mark TableView
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.todos.count;
+    if (self.type == TodoTypeUnfinished) {
+        return self.unfinishedTodos.count;
+    } else if (self.type == TodoTypeFinished) {
+        return self.finishedTodos.count;
+    }
+    return 0;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     NSString *strIdt=[tableColumn identifier];
-    Todo* todo = [self.todos objectAtIndex:row];
+    Todo* todo;
+    if (self.type == TodoTypeUnfinished) {
+        todo = [self.unfinishedTodos objectAtIndex:row];
+    } else if (self.type == TodoTypeFinished) {
+        todo = [self.finishedTodos objectAtIndex:row];
+    }
+    if (!todo) {
+        return nil;
+    }
     if([strIdt isEqualToString:@"level"]) {
         NSTableCellView *aView = [tableView makeViewWithIdentifier:strIdt owner:self];
         aView.textField.stringValue = [NSString stringWithFormat:@"%@",@(todo.level)];

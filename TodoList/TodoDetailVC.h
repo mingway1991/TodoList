@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "DataBaseManager.h"
+#import "MainConstantDefine.h"
 
 @interface TodoDetailVC : NSViewController
 
 @property (retain) Todo *todo;
+@property (assign) TodoType type;
 
 @end

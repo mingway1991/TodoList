@@ -16,6 +16,7 @@
 - (void)createTable;
 - (BOOL)insertTodo:(Todo *)todo;
 - (NSArray<Todo *> *)queryUnfinishedTodos;
+- (NSArray<Todo *> *)queryFinishedTodos;
 - (BOOL)deleteTodo:(Todo *)todo;
 - (BOOL)finishTodo:(Todo *)todo;
 
