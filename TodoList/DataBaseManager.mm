@@ -9,6 +9,8 @@
 #import "DataBaseManager.h"
 #import <WCDB/WCDB.h>
 
+static NSString *kTodoTableName = @"todo";
+
 static DataBaseManager *_dbManager;
 
 @interface DataBaseManager ()
@@ -40,7 +42,7 @@ static DataBaseManager *_dbManager;
     NSString *docDir = [paths objectAtIndex:0];
     NSString *dbPath = [NSString stringWithFormat:@"%@/todo.db",docDir];
     self.database = [[WCTDatabase alloc] initWithPath:dbPath];
-    BOOL result = [self.database createTableAndIndexesOfName:@"todo"
+    BOOL result = [self.database createTableAndIndexesOfName:kTodoTableName
                                               withClass:Todo.class];
     if (!result) {
         NSLog(@"创建数据库失败");
@@ -49,7 +51,7 @@ static DataBaseManager *_dbManager;
 
 - (BOOL)insertTodo:(Todo *)todo {
     BOOL result = [self.database insertObject:todo
-                                         into:@"todo"];
+                                         into:kTodoTableName];
     if (result) {
         NSLog(@"插入数据成功");
     } else {
@@ -60,20 +62,22 @@ static DataBaseManager *_dbManager;
 
 - (NSArray<Todo *> *)queryUnfinishedTodos {
     NSArray<Todo *> *todos = [self.database getObjectsOfClass:Todo.class
-                                                    fromTable:@"todo"
-                                                        where:Todo.isFinished==NO];
+                                                    fromTable:kTodoTableName
+                                                        where:Todo.isFinished==NO
+                                                      orderBy:Todo.timestamp.order(WCTOrderedDescending)];
     return todos;
 }
 
 - (NSArray<Todo *> *)queryFinishedTodos {
     NSArray<Todo *> *todos = [self.database getObjectsOfClass:Todo.class
-                                                    fromTable:@"todo"
-                                                        where:Todo.isFinished==YES];
+                                                    fromTable:kTodoTableName
+                                                        where:Todo.isFinished==YES
+                                                      orderBy:Todo.timestamp.order(WCTOrderedDescending)];
     return todos;
 }
 
 - (BOOL)deleteTodo:(Todo *)todo {
-    BOOL result = [self.database deleteObjectsFromTable:@"todo"
+    BOOL result = [self.database deleteObjectsFromTable:kTodoTableName
                                                   where:Todo.timestamp==todo.timestamp];
     if (result) {
         NSLog(@"删除数据成功");
@@ -85,7 +89,8 @@ static DataBaseManager *_dbManager;
 
 - (BOOL)finishTodo:(Todo *)todo {
     todo.isFinished = YES;
-    BOOL result = [self.database updateRowsInTable:@"todo" onProperty:Todo.isFinished
+    BOOL result = [self.database updateRowsInTable:kTodoTableName
+                                        onProperty:Todo.isFinished
                                          withValue:@(todo.isFinished)
                                              where:Todo.timestamp==todo.timestamp];
     if (result) {

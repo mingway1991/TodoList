@@ -106,7 +106,10 @@
 }
 
 - (void)tableViewDoubleClick:(id)nid {
-    [self performSegueWithIdentifier:@"detail" sender:nil];
+    NSInteger rowNumber = [self.todosTableView clickedRow];
+    if (rowNumber >= 0) {
+        [self performSegueWithIdentifier:@"detail" sender:nil];
+    }
 }
 
 @end
